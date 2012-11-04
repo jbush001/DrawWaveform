@@ -6,23 +6,23 @@ bits of waveforms, but they also don't allow labeling of traces easily.
 This is a postscript library that allows creating waveform images.  The waveforms can
 be defined at the bottom of the file by calling library functions:
 
-<numclocks> <numsignals> __startgraph__
+_numclocks_ _numsignals_ __startgraph__<br>
   Begins drawing a new graph with the specified number of clocks and signals 
   Note that the clock will be drawn automatically.
 
-<name> __newwave__
+_name_ __newwave__<br>
   Starts a new waveform (signal) with the specified name
   
-<value> <numclocks> __drawbit__
+_value_ _numclocks_ __drawbit__<br>
   Draws a single bit waveform with a given value for a specified number of clocks
   
-<label> <numclocks> __drawknown__
+_label_ _numclocks_ __drawknown__<br>
   Draws a multi-bit waveform with the given label
   
-<numclocks> __drawunknown__
+_numclocks_ __drawunknown__<br>
   Draw a multi-bit waveform that is unknown. It will be filled with gray
   
-<numclocks> __drawhiz__
+_numclocks_ __drawhiz__<br>
   Draw a portion of signal that is floating (high impedance)
   
 This can be invoked from ghostscript (gs waveform.ps) or you can double click the 
