@@ -10,6 +10,7 @@
 /labelwidth 80.0 def		% width reserved for signal name on left
 /labelmargin 5.0 def		% width between signal name and start of signal
 /topofpage 750 def
+/fontvoffs 3 def			% XXX hardcoded
 
 % computed metrics
 /transwidth clkwidth 8 div def					% width of transition
@@ -19,7 +20,7 @@
 /wavey topofpage waveheight add 5 sub def		% middle of current waveform
 /wavex 0 def
 
-% Draw a single bit signal (value numclocks )
+% Draw a single bit signal ( value numclocks )
 /drawbit {
 	2 dict begin
 	2 mul clkwidth mul /width exch def
@@ -69,7 +70,7 @@
 	width 2 div
 	string stringwidth pop 2 div
 	sub	
-	-5 rmoveto 
+	fontvoffs neg rmoveto 
 	string show
 	stroke
 
@@ -111,7 +112,7 @@
 	dup stringwidth pop		% get width of string
 	labelmargin add			% add a border
 	labelwidth exch sub 	% subtract from total width
-	wavey 5 sub				% XXX should compute the actual ascent of the font
+	wavey fontvoffs sub		
 	moveto					% set position
 	show
 	labelwidth wavey moveto	% now get ready to draw waveform
@@ -128,7 +129,7 @@
 	1 add % add one to numsignals to include 'clk', which is generated automatically
 	waveheight waveygap add mul % multiply signals by total height of waveform
 	topofpage exch sub % compute coordinate
-	5 sub % stick pas bottom
+	5 sub % stick past bottom
 	/pagebottom exch def
 	/x labelwidth def
 
