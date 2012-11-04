@@ -1,0 +1,200 @@
+%PS
+%
+% Script to draw digital waveforms
+%
+
+% Metrics
+/waveheight 16.0 def
+/waveygap 8.0 def			% vertical distance between two waveforms
+/clkwidth 16.0 def			% width of a single clock transition
+/labelwidth 75.0 def		% width reserved for signal name on left
+/labelmargin 5.0 def		% width between signal name and start of signal
+/topofpage 750 def
+
+% computed metrics
+/transwidth clkwidth 8 div def					% width of transition
+/halfheight waveheight 2 div def				% half of height
+
+% Working variables
+/wavey topofpage waveheight add 5 sub def		% middle of current waveform
+/wavex 0 def
+
+% Draw a single bit signal (value numclocks -- )
+/drawbit {
+	2 dict begin
+	2 mul clkwidth mul /width exch def
+	/value exch def
+
+	wavex wavey moveto
+	value 0.5 sub waveheight mul dup
+	transwidth exch rlineto
+	width transwidth 2 mul sub 0 rlineto
+	transwidth exch neg rlineto
+	stroke
+	
+	/wavex width wavex add def
+} def
+
+% Draw a multi bit signal, internal function ( fillcolor string numclocks )
+/drawbusi {
+	3 dict begin
+	2 mul clkwidth mul /width exch def
+	/string exch def
+	/fillcolor exch def
+
+	% draw the outline
+	newpath
+	wavex wavey moveto
+	transwidth halfheight neg rlineto
+	width transwidth 2 mul sub 0 rlineto
+	transwidth halfheight rlineto
+	transwidth neg halfheight rlineto
+	width transwidth 2 mul sub neg 0 rlineto
+	transwidth neg halfheight neg rlineto
+	closepath
+
+	% fill it
+	gsave
+	fillcolor setgray
+	fill
+	grestore
+
+	% outline it
+	gsave
+	stroke
+	grestore
+
+	% draw the string label
+	wavex wavey moveto
+	width 2 div
+	string stringwidth pop 2 div
+	sub	
+	-5 rmoveto 
+	string show
+	stroke
+
+	% advance position
+	/wavex width wavex add def	
+} def	
+
+% Draw unknown value multi-bit signal (will be shaded grey, no label)
+% ( numclocks )
+/drawunknown {
+	0.85 () 2 index
+	drawbusi
+	pop
+} def 
+
+% Draw known value multi-bit signal (labeled, not shaded)
+% ( label numclocks )
+/drawknown {
+	1.0 2 index 2 index
+	drawbusi
+	pop
+	pop
+} def
+
+% Draw a hi-z (floating) signal
+% ( numclocks )
+/drawhiz {
+	wavex wavey moveto
+	clkwidth mul 2 mul dup 0 rlineto
+	wavex add /wavex exch def	
+	stroke
+} def
+
+% Start a new waveform
+% ( label )
+/newwave {
+	/wavey wavey waveheight waveygap add sub def
+
+	dup stringwidth pop		% get width of string
+	labelmargin add			% add a border
+	labelwidth exch sub 	% subtract from total width
+	wavey 5 sub				% XXX should compute the actual ascent of the font
+	moveto					% set position
+	show
+	labelwidth wavey moveto	% now get ready to draw waveform
+
+	/wavex labelwidth def
+} def
+
+% ( numclocks numsignals )
+/startgraph {
+	2 dict begin
+
+	1 add % add one to numsignals to include 'clk', which is generated automatically
+	waveheight waveygap add mul % multiply signals by total height of waveform
+	topofpage exch sub % compute coordinate
+	5 sub % stick pas bottom
+	/pagebottom exch def
+	/x labelwidth def
+
+	% Draw dotted lines
+	gsave
+	[ 5 3 ] 0 setdash
+	0.7 0.7 0.7 setrgbcolor 	% light gray
+
+	dup
+	1 add
+	{
+		x topofpage moveto	
+		x pagebottom lineto
+		/x x clkwidth 2 mul add def
+	} repeat
+
+	stroke
+	grestore
+
+	/Helvetica findfont 12 scalefont setfont
+
+	(clk) newwave
+	{
+		1 0.5 drawbit
+		0 0.5 drawbit
+	} repeat
+} def
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set up waveforms here...
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+14 5 startgraph 
+(l2req_ready) newwave
+0 3 drawbit
+1 11 drawbit
+
+(l2req_valid) newwave
+0 1 drawbit
+1 3 drawbit
+0 1 drawbit
+1 2 drawbit
+0 7 drawbit
+
+(l2req control) newwave
+1 drawunknown
+(1) 3 drawknown
+1 drawunknown
+(2) 1 drawknown
+(3) 1 drawknown
+7 drawunknown
+
+(l2rsp_valid) newwave
+0 7 drawbit
+1 1 drawbit
+0 1 drawbit
+1 1 drawbit
+0 2 drawbit
+1 1 drawbit
+0 1 drawbit
+
+(l2rsp control) newwave
+7 drawunknown
+(1) 1 drawknown
+1 drawunknown
+(3) 1 drawknown
+2 drawunknown
+(2) 1 drawknown
+1 drawunknown
+
+showpage
