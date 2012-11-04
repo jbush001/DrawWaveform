@@ -11,7 +11,7 @@ _numclocks_ _numsignals_ __startwaveform__<br>
   Note that the clock will be drawn automatically.
 
 _name_ __newsignal__<br>
-  Starts a new waveform (signal) with the specified name
+  Starts a new signal with the specified name
   
 _value_ _numclocks_ __drawbit__<br>
   Draws a single bit waveform with a given value for a specified number of clocks
