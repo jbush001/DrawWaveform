@@ -27,3 +27,5 @@ _numclocks_ __drawhiz__<br>
   
 This can be invoked from ghostscript (gs waveform.ps) or you can double click the 
 postscript file directly on a Mac.
+
+![sample](https://github.com/jbush001/VectorProc/wiki/l2req-waveform.png)
