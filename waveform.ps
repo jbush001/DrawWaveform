@@ -7,7 +7,7 @@
 /waveheight 16.0 def
 /waveygap 8.0 def			% vertical distance between two waveforms
 /clkwidth 16.0 def			% width of a single clock transition
-/labelwidth 75.0 def		% width reserved for signal name on left
+/labelwidth 80.0 def		% width reserved for signal name on left
 /labelmargin 5.0 def		% width between signal name and start of signal
 /topofpage 750 def
 
@@ -19,7 +19,7 @@
 /wavey topofpage waveheight add 5 sub def		% middle of current waveform
 /wavex 0 def
 
-% Draw a single bit signal (value numclocks -- )
+% Draw a single bit signal (value numclocks )
 /drawbit {
 	2 dict begin
 	2 mul clkwidth mul /width exch def
@@ -105,7 +105,7 @@
 
 % Start a new waveform
 % ( label )
-/newwave {
+/newsignal {
 	/wavey wavey waveheight waveygap add sub def
 
 	dup stringwidth pop		% get width of string
@@ -120,9 +120,11 @@
 } def
 
 % ( numclocks numsignals )
-/startgraph {
-	2 dict begin
+/startwaveform {
+	0.5 setlinewidth
+	/Helvetica findfont 12 scalefont setfont
 
+	2 dict begin
 	1 add % add one to numsignals to include 'clk', which is generated automatically
 	waveheight waveygap add mul % multiply signals by total height of waveform
 	topofpage exch sub % compute coordinate
@@ -146,9 +148,7 @@
 	stroke
 	grestore
 
-	/Helvetica findfont 12 scalefont setfont
-
-	(clk) newwave
+	(clk) newsignal
 	{
 		1 0.5 drawbit
 		0 0.5 drawbit
@@ -159,27 +159,27 @@
 % Set up waveforms here...
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-14 5 startgraph 
-(l2req_ready) newwave
+14 5 startwaveform 
+(l2req_ready) newsignal
 0 3 drawbit
 1 11 drawbit
 
-(l2req_valid) newwave
+(l2req_valid) newsignal
 0 1 drawbit
 1 3 drawbit
 0 1 drawbit
 1 2 drawbit
 0 7 drawbit
 
-(l2req control) newwave
+(l2req control) newsignal
 1 drawunknown
-(1) 3 drawknown
+(a) 3 drawknown
 1 drawunknown
-(2) 1 drawknown
-(3) 1 drawknown
+(b) 1 drawknown
+(c) 1 drawknown
 7 drawunknown
 
-(l2rsp_valid) newwave
+(l2rsp_valid) newsignal
 0 7 drawbit
 1 1 drawbit
 0 1 drawbit
@@ -188,13 +188,13 @@
 1 1 drawbit
 0 1 drawbit
 
-(l2rsp control) newwave
+(l2rsp control) newsignal
 7 drawunknown
-(1) 1 drawknown
+(a) 1 drawknown
 1 drawunknown
-(3) 1 drawknown
+(c) 1 drawknown
 2 drawunknown
-(2) 1 drawknown
+(b) 1 drawknown
 1 drawunknown
 
 showpage

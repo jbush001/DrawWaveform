@@ -6,11 +6,11 @@ bits of waveforms, but they also don't allow labeling of traces easily.
 This is a postscript library that allows creating waveform images.  The waveforms can
 be defined at the bottom of the file by calling library functions:
 
-_numclocks_ _numsignals_ __startgraph__<br>
-  Begins drawing a new graph with the specified number of clocks and signals 
+_numclocks_ _numsignals_ __startwaveform__<br>
+  Begins drawing a new waveform with the specified number of clock transitions and signals 
   Note that the clock will be drawn automatically.
 
-_name_ __newwave__<br>
+_name_ __newsignal__<br>
   Starts a new waveform (signal) with the specified name
   
 _value_ _numclocks_ __drawbit__<br>
