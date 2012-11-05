@@ -9,7 +9,7 @@
 /clkwidth 16.0 def			% width of a single clock transition
 /labelwidth 80.0 def		% width reserved for signal name on left
 /labelmargin 5.0 def		% width between signal name and start of signal
-/topofpage 750 def
+/topofpage currentpagedevice /PageSize get 1 get def	% get height
 /fontvoffs 3 def			% XXX hardcoded
 
 % computed metrics
@@ -17,7 +17,7 @@
 /halfheight waveheight 2 div def				% half of height
 
 % Working variables
-/wavey topofpage waveheight add 5 sub def		% middle of current waveform
+/wavey topofpage waveheight add 10 sub def		% middle of current waveform
 /wavex 0 def
 
 % Draw a single bit signal ( value numclocks )
@@ -141,7 +141,7 @@
 	dup
 	1 add
 	{
-		x topofpage moveto	
+		x topofpage 5 add moveto	
 		x pagebottom lineto
 		/x x clkwidth 2 mul add def
 	} repeat

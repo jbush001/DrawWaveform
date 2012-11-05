@@ -1,10 +1,10 @@
 Every once in a while, I've needed to produce a sample waveform diagram for documentation.
-Omnigraffle and Visio have some templates, but I've found it a bit of a pain to work with,
-especially when I want to label traces.  There are also some fonts that contain
-bits of waveforms, but they also don't allow labeling of traces easily.
+Omnigraffle and Visio have some templates, but it's painful to line all the bits up.  There are also some fonts that contain
+pieces of waveforms, which is easier but doesn't look quite as nice and also don't allow labeling of traces easily.
 
 This is a postscript library that allows creating waveform images.  The waveforms can
-be defined at the bottom of the file by calling library functions:
+be defined by calling a small set of library functions (the program to do this is
+at the end of the source file).
 
 _numclocks_ _numsignals_ __startwaveform__<br>
   Begins drawing a new waveform with the specified number of clock transitions and signals 
