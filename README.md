@@ -1,6 +1,8 @@
 Every once in a while, I've needed to produce a sample waveform diagram for documentation.
 Omnigraffle and Visio have some templates, but it's painful to line all the bits up.  There are also some fonts that contain
 pieces of waveforms, which is easier but doesn't look quite as nice and also don't allow labeling of traces easily.
+I was inspired by [this LaTeX macro](http://www.texample.net/tikz/examples/timing-diagram/), but I wanted to make it
+look a little more polished and I'm not really a LaTeX user.
 
 This is a postscript library that allows creating waveform images.  The waveforms can
 be defined by calling a small set of library functions (the program to do this is

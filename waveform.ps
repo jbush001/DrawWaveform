@@ -19,16 +19,36 @@
 % Working variables
 /wavey topofpage waveheight add 10 sub def		% middle of current waveform
 /wavex 0 def
+/firsttransition true def
 
 % Draw a single bit signal ( value numclocks )
 /drawbit {
 	2 dict begin
-	2 mul clkwidth mul /width exch def
+	2 mul clkwidth mul 
+	firsttransition 
+	{
+		transwidth add
+	} if
+	
+	/width exch def
 	/value exch def
 
 	wavex wavey moveto
 	value 0.5 sub waveheight mul dup
-	transwidth exch rlineto
+
+	firsttransition 
+	{
+		% Don't draw transition for first signal
+		0 exch rmoveto
+		transwidth 0 rlineto
+		/firsttransition false def
+	} 
+	{
+		% Draw part of transition
+		transwidth exch rlineto
+	} 
+	ifelse
+
 	width transwidth 2 mul sub 0 rlineto
 	transwidth exch neg rlineto
 	stroke
@@ -39,7 +59,13 @@
 % Draw a multi bit signal, internal function ( fillcolor string numclocks )
 /drawbusi {
 	3 dict begin
-	2 mul clkwidth mul /width exch def
+	2 mul clkwidth mul 
+	firsttransition {
+		transwidth add
+		/firsttransition false def
+	} if
+	
+	/width exch def
 	/string exch def
 	/fillcolor exch def
 
@@ -108,6 +134,7 @@
 % ( label )
 /newsignal {
 	/wavey wavey waveheight waveygap add sub def
+	/firsttransition true def
 
 	dup stringwidth pop		% get width of string
 	labelmargin add			% add a border
@@ -150,6 +177,7 @@
 	grestore
 
 	(clk) newsignal
+	/firsttransition false def	% Don't offset the clock
 	{
 		1 0.5 drawbit
 		0 0.5 drawbit
