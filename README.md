@@ -4,9 +4,10 @@ pieces of waveforms, which is easier but doesn't look quite as nice and also don
 I was inspired by [this LaTeX macro](http://www.texample.net/tikz/examples/timing-diagram/), but I wanted to make it
 look a little more polished and I'm not really a LaTeX user.
 
-This is a postscript library that allows creating waveform images.  The waveforms can
-be defined by calling a small set of library functions (the program to do this is
-at the end of the source file).
+This is a postscript library that allows creating waveform images.  The waveforms are
+specified by calling a small set of library functions (there is an example at the end
+of the source file). As is typical in postscript, parameters appear before
+the function call.
 
 _numclocks_ _numsignals_ __startwaveform__<br>
   Begins drawing a new waveform with the specified number of clock transitions and signals 
@@ -30,4 +31,4 @@ _numclocks_ __drawhiz__<br>
 This can be invoked from ghostscript (gs waveform.ps) or you can double click the 
 postscript file directly on a Mac.
 
-![sample](https://github.com/jbush001/GPGPU/wiki/v1-l2req-waveform.png)
+![sample](https://raw.githubusercontent.com/jbush001/DrawWaveform/master/example.png)
