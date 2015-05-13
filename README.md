@@ -1,17 +1,10 @@
-Every once in a while, I've needed to produce a sample waveform diagram for documentation.
-Omnigraffle and Visio have some templates, but it's painful to line all the bits up.  There are also some fonts that contain
-pieces of waveforms, which is easier but doesn't look quite as nice and also don't allow labeling of traces easily.
-I was inspired by [this LaTeX macro](http://www.texample.net/tikz/examples/timing-diagram/), but I wanted to make it
-look a little more polished and I'm not really a LaTeX user.
+I occasionally need to produce a sample waveform diagram for documentation. Omnigraffle and Visio have waveform templates, but it's painful to line all the bits up. I was inspired by this LaTeX macro, but I wanted to make it look a little more polished and I'm not really a LaTeX user.
 
-This is a postscript library that allows creating waveform images.  The waveforms are
-specified by calling a small set of library functions (there is an example at the end
-of the source file). As is typical in postscript, parameters appear before
-the function call.
+This is a postscript library that allows creating waveform images. The waveforms are specified by calling a small set of library functions (there is an example at the end of the source file). As is typical in postscript, parameters appear before the function name.
 
 _numclocks_ _numsignals_ __startwaveform__<br>
   Begins drawing a new waveform with the specified number of clock transitions and signals 
-  Note that the clock will be drawn automatically.
+ The clock waveform will be drawn automatically.
 
 _name_ __newsignal__<br>
   Starts a new signal with the specified name
