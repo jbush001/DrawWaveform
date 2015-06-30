@@ -1,5 +1,3 @@
-I occasionally need to produce a sample waveform diagram for documentation. Omnigraffle and Visio have waveform templates, but it's painful to line all the bits up. I was inspired by this LaTeX macro, but I wanted to make it look a little more polished and I'm not really a LaTeX user.
-
 This is a postscript library that allows creating waveform images. The waveforms are specified by calling a small set of library functions (there is an example at the end of the source file). As is typical in postscript, parameters appear before the function name.
 
 _numclocks_ _numsignals_ __startwaveform__<br>
